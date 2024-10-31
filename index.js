@@ -30,11 +30,27 @@ function operate() {
 
 const botoes = document.querySelectorAll("button"); // Seleciona todos os botões
 const display = document.querySelector("#display");
-let displayText = "";
-let num1;
+let num1 = "";
+let op = "";
+let num2 = "";
+
+const display_personalizado = (num1, num2, op) => {
+    display.innerText = num1 + op + num2;
+}
+
 botoes.forEach(botao => {
     botao.addEventListener("click", (event) => {
-        displayText += event.target.innerText; // Pega o texto dentro do botão clicado
-        display.innerText = displayText;
+        if(event.target.classList.contains("digit")){
+            if(op === "") {
+                num1 += event.target.innerText;
+                display_personalizado(num1, num2, op);
+            } else {
+                num2 += event.target.innerText;
+                display_personalizado(num1, num2, op);
+            }
+        } else if(event.target.classList.contains("operation")){
+            op = event.target.innerText;
+            display_personalizado(num1, num2, op);
+        }
     });
 });
