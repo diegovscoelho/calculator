@@ -15,16 +15,20 @@ function mult(n1, n2) {
 }
 
 function operate() {
-    if(op === "+") {
-        return console.log(add(num1, num2));
-    } else if(op === "-") {
-        return console.log(sub(num1, num2));
-    } else if(op === "/") {
-        return console.log(div(num1, num2));
-    } else if(op === "*") {
-        return console.log(mult(num1, num2));
-    } else{
-        return console.log("Digite uma operação válida");
+    if(op === '+') {
+        num1 = add(num1, num2); 
+        display.innerText = num1;
+    } else if(op === '-') {
+        num1 = sub(num1, num2); 
+        display.innerText = num1;
+    } else if(op === '*') {
+        num1 = mult(num1, num2); 
+        display.innerText = num1;
+    } else if(op === '/') {
+        num1 = div(num1, num2); 
+        display.innerText = num1;
+    } else {
+        display.innerText = "Digite uma operação válida!";
     }
 }
 
@@ -43,14 +47,24 @@ botoes.forEach(botao => {
         if(event.target.classList.contains("digit")){
             if(op === "") {
                 num1 += event.target.innerText;
+                num1 = parseInt(num1, 10);
                 display_personalizado(num1, num2, op);
             } else {
                 num2 += event.target.innerText;
+                num2 = parseInt(num2, 10);
                 display_personalizado(num1, num2, op);
             }
-        } else if(event.target.classList.contains("operation")){
+        } else if(event.target.classList.contains("operation") && num1 !== ""){
             op = event.target.innerText;
             display_personalizado(num1, num2, op);
+        } else if(event.target.classList.contains("result") && num2 !== "") {
+            operate();
+            num2 = "";
+        } else if(event.target.classList.contains("clear")) {
+            num1 = "";
+            num2 = "";
+            op = "";
+            display.innerText = "";
         }
     });
 });
